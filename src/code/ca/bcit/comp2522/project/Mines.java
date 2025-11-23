@@ -16,40 +16,43 @@ import javafx.stage.Stage;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.Consumer;
 
 public class Mines extends Application
 {
-    private static final int  FONT_SIZE      = 18;
-    private static final Font FONT           = Font.font("Arial", FontWeight.BOLD, FONT_SIZE);
+    private static final int  FONT_SIZE         = 18;
+    private static final Font FONT              = Font.font("Arial", FontWeight.BOLD, FONT_SIZE);
 
-    private static final int WINDOW_WIDTH    = 1920;
-    private static final int WINDOW_HEIGHT   = 1080;
-    private static final int BUTTON_WIDTH    = 60;
-    private static final int BUTTON_HEIGHT   = 60;
-    private static final int EASY_WIDTH      = 8;
-    private static final int EASY_HEIGHT     = 8;
-    private static final int HARD_WIDTH      = 36;
-    private static final int HARD_HEIGHT     = 16;
-    private static final int PADDING         = 20;
-    private static final int GAME_PADDING    = 5;
-    private static final int VERTICAL_MARGIN = 15;
+    private static final int WINDOW_WIDTH       = 1920;
+    private static final int WINDOW_HEIGHT      = 1080;
+    private static final int BUTTON_WIDTH       = 60;
+    private static final int BUTTON_HEIGHT      = 60;
+    private static final int MENU_BUTTON_WIDTH  = 180;
+    private static final int MENU_BUTTON_HEIGHT = 80;
+    private static final int EASY_WIDTH         = 8;
+    private static final int EASY_HEIGHT        = 8;
+    private static final int HARD_WIDTH         = 36;
+    private static final int HARD_HEIGHT        = 16;
+    private static final int PADDING            = 20;
+    private static final int GAME_PADDING       = 5;
+    private static final int VERTICAL_MARGIN    = 15;
 
-    private static final int EASY_MINES      = 10;
-    private static final int HARD_MINES      = 99;
-    private static final int MINE            = -1;
-    private static final int NO_MINE         = 0;
+    private static final int EASY_MINES         = 10;
+    private static final int HARD_MINES         = 99;
+    private static final int MINE               = -1;
+    private static final int NO_MINE            = 0;
 
-    private static final int MIN_OFFSET      = -1;
-    private static final int MAX_OFFSET      = 1;
-    private static final int SELF_OFFSET     = 0;
-    private static final int FIRST_ROW       = 0;
-    private static final int FIRST_COL       = 0;
+    private static final int MIN_OFFSET         = -1;
+    private static final int MAX_OFFSET         = 1;
+    private static final int SELF_OFFSET        = 0;
+    private static final int FIRST_ROW          = 0;
+    private static final int FIRST_COL          = 0;
 
-    private static final int NO_FLAG         = 0;
-    private static final int FLAG            = 1;
-    private static final int FLAG_QUESTION   = 2;
+    private static final int NO_FLAG            = 0;
+    private static final int FLAG               = 1;
+    private static final int FLAG_QUESTION      = 2;
 
-    private static final int DEFAULT_BUTTON = -2;
+    private static final int DEFAULT_BUTTON     = -2;
     private static final Map<Integer, String> BUTTON_THEMES = new HashMap<>();
 
     static {
@@ -77,40 +80,46 @@ public class Mines extends Application
     @Override
     public void start(final Stage stage)
     {
-        final Label title;
-        title = new Label("Select Game Size");
-        title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
-
+        final Label  title;
         final Button smallBtn;
         final Button largeBtn;
+
+        title = new Label("Select Game Size");
+        title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
 
         smallBtn = new Button("8 × 8 (Beginner)");
         largeBtn = new Button("36 × 16 (Expert)");
 
-        smallBtn.setPrefWidth(BUTTON_WIDTH);
-        largeBtn.setPrefWidth(BUTTON_WIDTH);
-
+        smallBtn.setPrefWidth(MENU_BUTTON_WIDTH);
+        largeBtn.setPrefWidth(MENU_BUTTON_WIDTH);
         smallBtn.setOnAction(e -> startGame(EASY_WIDTH, EASY_HEIGHT, EASY_MINES));
         largeBtn.setOnAction(e -> startGame(HARD_WIDTH, HARD_HEIGHT, HARD_MINES));
 
-        final VBox root;
+        final VBox  root;
+        final Scene scene;
+
         root = new VBox(VERTICAL_MARGIN);
+        scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         root.setPadding(new Insets(PADDING));
         root.setAlignment(Pos.CENTER);
         root.getChildren().addAll(title, smallBtn, largeBtn);
 
-        final Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.setTitle("Random Mines - A Minesweeper Game");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
 
-    private void forEachNeighbor(final int index, final java.util.function.IntConsumer action)
-    {
-        final int row = index / width;
-        final int col = index % width;
+    private void forEachNeighbor(
+        final int index,
+        final Consumer<Integer> action
+    ) {
+        final int row;
+        final int col;
+
+        row = index / width;
+        col = index % width;
 
         for (int dr = MIN_OFFSET; dr <= MAX_OFFSET; dr++)
         {
@@ -121,8 +130,11 @@ public class Mines extends Application
                     continue;
                 }
 
-                final int nr = row + dr;
-                final int nc = col + dc;
+                final int nr;
+                final int nc;
+
+                nr = row + dr;
+                nc = col + dc;
 
                 if (nr < FIRST_ROW || nr >= height ||
                     nc < FIRST_COL || nc >= width)
@@ -130,7 +142,8 @@ public class Mines extends Application
                     continue;
                 }
 
-                final int neighborIndex = nr * width + nc;
+                final int neighborIndex;
+                neighborIndex = nr * width + nc;
                 action.accept(neighborIndex);
             }
         }
@@ -160,14 +173,14 @@ public class Mines extends Application
             }
         }
 
-        for (int i = 0; i < field.length; i++)
+        for (int i = 0; i < this.field.length; i++)
         {
             if (this.field[i] == MINE)
             {
                 continue;
             }
 
-            int[] count = { NO_MINE };
+            final int[] count = { NO_MINE };
 
             forEachNeighbor(i, neighborIndex -> {
                 if (this.field[neighborIndex] == MINE)
@@ -184,11 +197,11 @@ public class Mines extends Application
     {
         forEachNeighbor(index, neighborIndex -> {
 
-            if (!revealed[neighborIndex])
+            if (!this.revealed[neighborIndex])
             {
                 reveal(neighborIndex);
 
-                if (field[neighborIndex] == NO_MINE)
+                if (this.field[neighborIndex] == NO_MINE)
                 {
                     popFieldVoid(neighborIndex);
                 }
@@ -203,8 +216,8 @@ public class Mines extends Application
     ) {
         this.flags   = NO_FLAG;
         this.buttons = new Button[width * height];
-        this.width  = width;
-        this.height = height;
+        this.width   = width;
+        this.height  = height;
 
         generateField(mines);
 
@@ -238,11 +251,15 @@ public class Mines extends Application
 
         this.buttons[index].setText(buttonText);
 
-        this.flags = this.flagged[index] == FLAG ? this.flags + FLAG : this.flags - FLAG;
+        this.flags = this.flagged[index] == FLAG ?
+                     this.flags + FLAG :
+                     this.flags - FLAG;
     }
 
-    private GridPane createGrid(final int width, final int height)
-    {
+    private GridPane createGrid(
+        final int width,
+        final int height
+    ) {
         final GridPane grid;
         grid = new GridPane();
 
@@ -266,11 +283,18 @@ public class Mines extends Application
                 button.setOnMouseEntered(e -> button.setCursor(javafx.scene.Cursor.HAND));
                 button.setOnMouseExited(e -> button.setCursor(javafx.scene.Cursor.DEFAULT));
                 button.setOnMouseClicked(e -> {
-                    if (e.getButton() == MouseButton.PRIMARY) {
+                    if (e.getButton() == MouseButton.PRIMARY)
+                    {
                         reveal(index);
                     }
-                    else if (e.getButton() == MouseButton.SECONDARY) {
+                    else if (e.getButton() == MouseButton.SECONDARY)
+                    {
                         flag(index);
+                    }
+                    else
+                    {
+                        // do nothing
+                        return;
                     }
                 });
 
