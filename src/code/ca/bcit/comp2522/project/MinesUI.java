@@ -22,6 +22,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * MinesUI handles all Minesweeper UI elements,
+ * main menu, grid generation of the minefield.
+ * Updating button displays, disabling buttons,
+ * showing flags, warnings, etc.
+ *
+ * @author Braeden Sowinski
+ * @version 1.0.0
+ */
 public class MinesUI
 {
     private static final int  FONT_SIZE               = 18;
@@ -89,6 +98,11 @@ public class MinesUI
     private Timeline timer;
     private boolean  timerRunning;
 
+    /**
+     * MinesUI constructor creates an ArrayList
+     * to store buttons and track which mode
+     * the game is in, normal or random
+     */
     public MinesUI()
     {
         this.buttons = new ArrayList<>();
@@ -96,6 +110,11 @@ public class MinesUI
         this.timerRunning = false;
     }
 
+    /**
+     * showMainMenu displays main menu to choose
+     * game mode, and field size.
+     * @param primaryStage to display main menu to
+     */
     public void showMainMenu(final Stage primaryStage)
     {
         final Label  titleLabel;
@@ -142,6 +161,17 @@ public class MinesUI
         primaryStage.show();
     }
 
+    /**
+     * startGame creates new Mine game, to
+     * generate field, place mines, handle
+     * randomization if enabled. Creates
+     * grid of buttons for minefield, displays
+     * new window of game instance of given size.
+     * @param width of field to generate
+     * @param height of field to generates
+     * @param mines to generate in field
+     * @param ownerStage to display minefield grid to
+     */
     private void startGame(
         final int   width,
         final int   height,
@@ -205,6 +235,14 @@ public class MinesUI
         gameStage.show();
     }
 
+    /**
+     * createGrid generates the button grid
+     * that represents the minefield of the
+     * given dimensions
+     * @param width of minefield grid
+     * @param height of minefield grid
+     * @return GridPane containing buttons of minefield
+     */
     private GridPane createGrid(final int width, final int height)
     {
         final GridPane grid;
@@ -251,6 +289,13 @@ public class MinesUI
         return grid;
     }
 
+    /**
+     * handleReveal reveals the given cell in the
+     * minefield ensures the timer is running if first
+     * reveal, call randomize on board if random mode
+     * enabled, and refresh all button UI elements.
+     * @param index to reveal
+     */
     private void handleReveal(final int index)
     {
         if (!timerRunning)
@@ -292,6 +337,11 @@ public class MinesUI
         }
     }
 
+    /**
+     * handleFlag updates the given cell to be
+     * flagged, questions, or back to no flag.
+     * @param index to flag
+     */
     private void handleFlag(final int index)
     {
         final int newState;
@@ -315,6 +365,12 @@ public class MinesUI
         updateButtonDisplay(index);
     }
 
+    /**
+     * updateButtonDisplay updates a given button
+     * by index depending on how the cell is configured.
+     * Flagged, questioned, or revealed.
+     * @param index of cell to update button
+     */
     private void updateButtonDisplay(final int index)
     {
         final Button button;
@@ -363,6 +419,12 @@ public class MinesUI
         }
     }
 
+    /**
+     * refreshAllButtons iterates over all buttons
+     * and calls updateButtonDisplay for that button,
+     * as well as disables button if revealed, preventing
+     * further clicking on the button.
+     */
     private void refreshAllButtons()
     {
         for (int i = 0; i < this.buttons.size(); i++)
@@ -375,6 +437,10 @@ public class MinesUI
         }
     }
 
+    /**
+     * startTimer when initial cell is revealed to
+     * track the game time.
+     */
     private void startTimer()
     {
         final KeyFrame tick;
@@ -394,6 +460,9 @@ public class MinesUI
         this.timerRunning = true;
     }
 
+    /**
+     * stopTime once game is over, either lost or won.
+     */
     private void stopTimer()
     {
         if (this.timer != null)
@@ -403,6 +472,11 @@ public class MinesUI
         this.timerRunning = false;
     }
 
+    /**
+     * handleWin displays a win message window, with the time
+     * taken to win the game, show all mines, and disable all
+     * buttons.
+     */
     private void handleWin()
     {
         final Alert winAlert;
@@ -411,6 +485,7 @@ public class MinesUI
         this.game.saveScore(this.seconds);
         this.bestLabel.setText("Best: " + this.game.getBestScoreSeconds() + "s");
 
+        showAllMines();
         disableAllButtons();
 
         winAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -419,6 +494,10 @@ public class MinesUI
         winAlert.showAndWait();
     }
 
+    /**
+     * handleLoss displays a loss message, reveals all
+     * mines and stops timer. Forces user to restart game.
+     */
     private void handleLoss()
     {
         final Alert lossAlert;
@@ -429,10 +508,14 @@ public class MinesUI
 
         lossAlert = new Alert(Alert.AlertType.ERROR);
         lossAlert.setHeaderText("You lost...");
-        lossAlert.setContentText("You dug up a mine. Better luck next time.");
+        lossAlert.setContentText("You dug up a mine and lost your legs.");
         lossAlert.showAndWait();
     }
 
+    /**
+     * showAllMines shows all mine locations for when
+     * a user wins or loses.
+     */
     private void showAllMines()
     {
         for (int i = 0; i < this.buttons.size(); i++)
@@ -448,6 +531,10 @@ public class MinesUI
         }
     }
 
+    /**
+     * disableAllButtons iterates over all buttons
+     * and calls the disableButton method on it.
+     */
     private void disableAllButtons()
     {
         final Iterator<Button> iterator;
@@ -463,6 +550,11 @@ public class MinesUI
         }
     }
 
+    /**
+     * disableButton prevents user from
+     * interacting with it by clicking.
+     * @param button to disable
+     */
     private void disableButton(final Button button)
     {
         button.setMouseTransparent(true);

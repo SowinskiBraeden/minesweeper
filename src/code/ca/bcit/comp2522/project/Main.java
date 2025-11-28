@@ -3,13 +3,19 @@ package ca.bcit.comp2522.project;
 import java.util.Scanner;
 
 /**
- * Main program entry to access a games menu
+ * Main program entry to access a games menu,
+ * users can select from 3 games. Word Game,
+ * Number Game, or My Game (Minesweeper)
  *
  * @author Braeden Sowinski
  * @version 1.0.0
  */
 public class Main
 {
+    /**
+     * main program entry
+     * @param args from the command line
+     */
     public static void main(final String[] args)
     {
         final Scanner scanner;

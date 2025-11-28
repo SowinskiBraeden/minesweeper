@@ -12,7 +12,10 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Score manager for the word game.
+ * Score manager for WordGame, writes and reads
+ * scores from file, get and validate high-scores,
+ * calculate score averages and provides useful
+ * toString methods to summarize scores.
  *
  * @author Braeden Sowinski
  * @version 1.0.0
@@ -31,6 +34,13 @@ public class Score
     private final int    numIncorrectTwoAttempts;
     private final int    score;
 
+    /**
+     * appendScoreToFile takes in a Score object
+     * and filepath, appends Score values to file
+     * accordingly.
+     * @param score to append to filepath
+     * @param scoreFilePath filepath to append Score to
+     */
     public static void appendScoreToFile(
         final Score score,
         final String scoreFilePath
@@ -52,6 +62,12 @@ public class Score
         }
     }
 
+    /**
+     * readScoresFromFile returns a history of all Scores
+     * read from the given filepath.
+     * @param scoreFilePath to read scores from
+     * @return a list of all Scores read from given filepath
+     */
     public static List<Score> readScoresFromFile(final String scoreFilePath)
     {
         final List<Score> scores;
@@ -110,6 +126,11 @@ public class Score
         return scores;
     }
 
+    /**
+     * getHighScore from a given List of Scores
+     * @param scores list to find high-score from
+     * @return high Score from list of scores
+     */
     public static Score getHighScore(final List<Score> scores)
     {
         return scores.stream()
@@ -117,6 +138,14 @@ public class Score
                 .orElse(null);
     }
 
+    /**
+     * isHighScore takes a List of Scores and
+     * new Score to check if the new Score is
+     * a high-score in the given scores list.
+     * @param score to check if is high score
+     * @param scores list to compare Score to
+     * @return if score is a new high-score in list
+     */
     public static boolean isHighScore(
         final Score score,
         final List<Score> scores
@@ -129,6 +158,17 @@ public class Score
                 highScore.getScore() < score.getScore());
     }
 
+    /**
+     * Score constructor saves score dateTime,
+     * number of games played for this score,
+     * and relevant scores based on number of
+     * guesses.
+     * @param dateTime the score was recorded
+     * @param numGamesPlayed is the number of WordGames played
+     * @param numCorrectFirstAttempt is the number of times a guess was correct first try
+     * @param numCorrectSecondAttempt is the number of times a guess was correct on second try
+     * @param numIncorrectTwoAttempts is the number of times both guesses were incorrect
+     */
     public Score(
         final LocalDateTime dateTime,
         final int numGamesPlayed,
@@ -151,11 +191,20 @@ public class Score
                      this.numCorrectSecondAttempt * SECOND_GUESS_POINTS;
     }
 
+    /**
+     * getDateTimePlayed of Score
+     * @return dateTimePlayed as a String
+     */
     public String getDateTimePlayed()
     {
         return this.dateTimePlayed;
     }
 
+    /**
+     * toString neatly presents this Score
+     * in a String format
+     * @return formatted String of Score details
+     */
     @Override
     public String toString()
     {
@@ -185,11 +234,19 @@ public class Score
         return log.toString();
     }
 
+    /**
+     * getScore returns total points of this Score
+     * @return total points score
+     */
     public int getScore()
     {
         return this.score;
     }
 
+    /**
+     * calculateAverage points per round
+     * @return average points scored per round
+     */
     public float calculateAverage()
     {
         return (float) this.score / (float) this.numGamesPlayed;

@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.project.tests;
+package ca.bcit.comp2522.project;
 
 import ca.bcit.comp2522.project.Mines;
 import org.junit.jupiter.api.Test;

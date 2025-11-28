@@ -6,6 +6,16 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * WordGame asks NUMBER_OF_QUESTIONS where you are
+ * either asked about a country by capital,
+ * asked about a capital by country,
+ * or asked about a country by a random fact.
+ *
+ * Score is kept and saved
+ * @author Braeden Sowinski
+ * @version 1.0.0
+ */
 public class WordGame
 {
     private static final String SCORE_PATH           = "./data/score.txt";
@@ -26,12 +36,24 @@ public class WordGame
 
     private final World world;
 
+    /**
+     * WordGame constructor creates a World class to
+     * access Countries and their details.
+     * @throws IOException if World failed to read countries
+     */
     public WordGame()
         throws IOException
     {
         this.world = new World();
     }
 
+    /*
+     * checkAnswer reads user input and compares it to
+     * a given correct answer and updates scores accordingly.
+     * @param correctAnswer to check user input to
+     * @param scanner to read user input from
+     * @param scores to update accordingly
+     */
     private static void checkAnswer(
         final String  correctAnswer,
         final Scanner scanner,
@@ -66,6 +88,16 @@ public class WordGame
         System.out.printf("The correct answer was %s\n", correctAnswer);
     }
 
+    /*
+     * startTrivia starts the game and asks NUMBER_OF_QUESTIONS,
+     * randomly chooses a Country and randomly chooses which
+     * kind of question to ask:
+     * country by capital,
+     * capital by country, or
+     * country by fact.
+     * @param scanner to pass to checkAnswer method
+     * @param scores to pass to checkAnswer method
+     */
     private void startTrivia(
         final Scanner scanner,
         final int[]   scores
@@ -109,6 +141,14 @@ public class WordGame
         }
     }
 
+    /**
+     * runTrivia initializes score, scanner, and keeps
+     * track if the user wants to keep playing after
+     * a round is completed.
+     *
+     * Once a user is done playing, score from all rounds is
+     * saved and high-scores are calculated.
+     */
     public void runTrivia()
     {
         final Scanner scanner;
@@ -201,6 +241,10 @@ public class WordGame
         }
     }
 
+    /**
+     * main method for quickly testing the WordGame
+     * @param args from command line
+     */
     public static void main(final String[] args)
     {
         final WordGame test;

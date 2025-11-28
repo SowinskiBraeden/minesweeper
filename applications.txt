@@ -1,0 +1,40 @@
+lesson 1:
+    - static initializer used in Mines.java
+    - static initializer used in MinesUI.java
+    - method overloading in Mines.java > startNewGame()
+
+lesson 2:
+    - inheritance in Mines.java (extends GameBoard)
+    - custom exception in InvalidMoveException.java
+    - throwing exception in Mines.java > reveal()
+    - catching exception in MinesUI.java > handleReveal()
+
+lesson 3:
+    - method overriding in Mines.java > reset()
+    - substitution via GameBoard parent reference in constructor chain
+
+lesson 4:
+    - abstract class in GameBoard.java
+    - abstract method reset() in GameBoard.java
+    - implementation of abstract method in Mines.java > reset()
+
+lesson 5:
+    - collections in MinesUI.java > List<Button> buttons
+    - iterators in MinesUI.java > disableAllButtons()
+
+lesson 6:
+    - lambda expressions in Mines.java > forEachNeighbor()
+    - lambda expressions in MinesUI.java > button.setOnMouseClicked()
+
+lesson 8:
+    - Scanner used in Mines.java > loadBestScore()
+    - BufferedReader used in Mines.java > loadBestScore()
+    - BufferedWriter used in Mines.java > saveScore()
+    - File used in Mines.java > loadBestScore()
+
+lesson 9:
+    - JavaFX GUI in MinesUI.java
+    - JavaFX application entry class in MyGame.java > start()
+
+lesson 10:
+    - unit tests to be shown in accompanying JUnit test files

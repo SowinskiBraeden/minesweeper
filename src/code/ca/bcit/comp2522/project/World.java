@@ -15,6 +15,10 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 /**
+ * World class reads countries and their facts
+ * from a file and stores the Country in a Map.
+ * Also provides useful functions to get a random
+ * Country from the Map.
  * @author Braeden Sowinski
  * @version 1.0.0
  */
@@ -27,6 +31,13 @@ public class World
 
     private final Map<String, Country> countries;
 
+    /*
+     * readCuntryData from a given line
+     * @param line to parse
+     * @param reader to read line
+     * @return Country with name and facts
+     * @throws IOException
+     */
     private static Country readCountryData(
         final String         line,
         final BufferedReader reader
@@ -50,6 +61,12 @@ public class World
         return new Country(countryName, countryCapital, facts);
     }
 
+    /**
+     * World constructor creates a hashmap
+     * where the key is a Country name, and
+     * the value is the Country object.
+     * @throws IOException
+     */
     public World()
         throws IOException
     {
@@ -90,6 +107,11 @@ public class World
         }
     }
 
+    /**
+     * getRandomCountry returns a random
+     * Country from this countries Map.
+     * @return random Country
+     */
     public Country getRandomCountry()
     {
         final Random       rand;

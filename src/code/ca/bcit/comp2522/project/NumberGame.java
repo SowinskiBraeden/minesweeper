@@ -12,6 +12,17 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
 
+/**
+ * NumberGame is a GUI game with JavaFX
+ * where a user has to place randomly generated
+ * numbers into a 5x4 grid of buttons. Numbers
+ * must be played in order to win.
+ *
+ * Extends JavaFX Application
+ *
+ * @author Braeden Sowinski
+ * @version 1.0.0
+ */
 public class NumberGame
     extends Application
 {
@@ -35,14 +46,20 @@ public class NumberGame
     private int currentNumber;
     private int[] positions;
     private RandomNumberGenerator generator;
+    private AscendingPlacement placementValidator;
 
+    /**
+     * start NumberGame GUI
+     * @param stage to show
+     */
     @Override
     public void start(final Stage stage)
     {
-        this.generator     = new RandomNumberGenerator(MIN_RAND_NUM, MAX_RAND_NUM);
-        this.numbersPlaced = STARTING_NUMBERS_PLACED;
-        this.currentNumber = this.generator.generate();
-        this.positions     = new int[GRID_WIDTH * GRID_HEIGHT];
+        this.placementValidator = new AscendingPlacement();
+        this.generator          = new RandomNumberGenerator(MIN_RAND_NUM, MAX_RAND_NUM);
+        this.numbersPlaced      = STARTING_NUMBERS_PLACED;
+        this.currentNumber      = this.generator.generate();
+        this.positions          = new int[GRID_WIDTH * GRID_HEIGHT];
 
         this.numberLabel = new Label("Next number: " + this.currentNumber + " - Select a slot.");
         this.numberLabel.setFont(FONT);
@@ -66,6 +83,11 @@ public class NumberGame
         stage.show();
     }
 
+    /*
+     * createGrid is used to generate the
+     * button grid for users to play in.
+     * @return GridPane with Buttons
+     */
     private GridPane createGrid()
     {
         final GridPane grid;
@@ -96,50 +118,22 @@ public class NumberGame
         return grid;
     }
 
-    private void triggerFailed()
+    /*
+     * triggerFailed handles stopping the game
+     * when lost, i.e. impossible to place next
+     * number
+     */
+    private void triggerFailed(final String message)
     {
-        this.numberLabel.setText("Next number: " + this.currentNumber + " - Impossible to place next number");
+        this.numberLabel.setText("Next number: " + this.currentNumber + " - " + message);
     }
 
-    private boolean canBePlaced()
-    {
-        for (int i = 0; i < positions.length; i++) {
-
-            if (this.positions[i] != STARTING_NUMBERS_PLACED)
-            {
-                continue;
-            }
-
-            int left;
-            left = Integer.MIN_VALUE;
-
-            for (int j = i - INDEX_OFFSET; j >= STARTING_NUMBERS_PLACED; j--)
-            {
-                if (this.positions[j] != STARTING_NUMBERS_PLACED)
-                {
-                    left = this.positions[j];
-                    break;
-                }
-            }
-
-            int right;
-            right = Integer.MAX_VALUE;
-            for (int j = i + INDEX_OFFSET; j < this.positions.length; j++)
-            {
-                if (this.positions[j] != STARTING_NUMBERS_PLACED) {
-                    right = this.positions[j];
-                    break;
-                }
-            }
-
-            if (left < currentNumber && currentNumber < right) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
+    /*
+     * handlePress of button to place number
+     * in that cell
+     * @param button pressed
+     * @param index of button to place value
+     */
     private void handlePress(final Button button, final int index)
     {
         button.setText("" + this.currentNumber);
@@ -149,24 +143,17 @@ public class NumberGame
         this.positions[index] = this.currentNumber;
 
         // Detect bad placement
-        for (int i = 0; i < GRID_WIDTH * GRID_HEIGHT; i++)
+        final boolean isValidPlacement;
+        isValidPlacement = this.placementValidator.isValidPlacement(
+                this.positions,
+                index,
+                this.currentNumber
+        );
+
+        if (!isValidPlacement)
         {
-            final boolean largerBelow;
-            final boolean smallerAbove;
-
-            largerBelow  = i < index &&
-                           this.positions[i] != STARTING_NUMBERS_PLACED &&
-                           this.positions[i] > this.positions[index];
-
-            smallerAbove = i > index &&
-                           this.positions[i] != STARTING_NUMBERS_PLACED &&
-                           this.positions[i] < this.positions[index];
-
-            if (largerBelow || smallerAbove)
-            {
-                triggerFailed();
-                return;
-            }
+            triggerFailed("Placed number incorrectly.");
+            return;
         }
 
         if (this.numbersPlaced >= TOTAL_NUMBERS)
@@ -178,17 +165,21 @@ public class NumberGame
         this.currentNumber = this.generator.generate();
 
         final boolean canPlaceNext;
-        canPlaceNext = canBePlaced();
+        canPlaceNext = this.placementValidator.canPlaceNext(this.positions, this.currentNumber);
 
         if (!canPlaceNext)
         {
-            triggerFailed();
+            triggerFailed("Impossible to place next number.");
             return;
         }
 
         this.numberLabel.setText("Next number: " + this.currentNumber + " - Select a slot.");
     }
 
+    /**
+     * main program entry for quick testing
+     * @param args from command line
+     */
     public static void main(final String[] args)
     {
         launch(args);
