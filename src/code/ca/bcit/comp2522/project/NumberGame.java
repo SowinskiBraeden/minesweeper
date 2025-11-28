@@ -187,6 +187,13 @@ public class NumberGame
         popup.show();
     }
 
+    /**
+     * showResults summary after user quits
+     * game, show games won/loss out of
+     * total games played, total successful
+     * placements and average placements
+     * per game.
+     */
     private void showResults()
     {
         final Stage         popup;
