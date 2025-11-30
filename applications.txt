@@ -1,40 +1,41 @@
 lesson 1:
-    - static initializer used in Mines.java
-    - static initializer used in MinesUI.java
-    - method overloading in Mines.java > startNewGame()
+    - static initializer in Mines.java (static block initializing RANDOM_GENERATOR)
+    - static initializer in MinesUI.java (static block initializing BUTTON_THEMES)
+    - constructor overloading demonstrated across project (e.g., RandomNumberGenerator and Mines constructors)
 
 lesson 2:
-    - inheritance in Mines.java (extends GameBoard)
-    - custom exception in InvalidMoveException.java
-    - throwing exception in Mines.java > reveal()
-    - catching exception in MinesUI.java > handleReveal()
+    - inheritance: Mines extends GameBoard (GameBoard.java → Mines.java)
+    - custom exception class: InvalidMoveException (thrown in Mines.reveal)
+    - throwing exceptions in Mines.reveal()
+    - catching exceptions in MinesUI.handleReveal() within UI logic
 
 lesson 3:
-    - method overriding in Mines.java > reset()
-    - substitution via GameBoard parent reference in constructor chain
+    - method overriding: Mines overrides abstract GameBoard.reset()
+    - substitution: GameBoard constructor called via super(width, height) inside Mines
 
 lesson 4:
-    - abstract class in GameBoard.java
-    - abstract method reset() in GameBoard.java
-    - implementation of abstract method in Mines.java > reset()
+    - abstract class: GameBoard.java
+    - abstract method: reset() defined in GameBoard
+    - implementation of abstract method in Mines.reset()
 
 lesson 5:
-    - collections in MinesUI.java > List<Button> buttons
-    - iterators in MinesUI.java > disableAllButtons()
+    - collections: MinesUI stores buttons in List<Button> (ArrayList)
+    - iterators: MinesUI.disableAllButtons() uses Iterator<Button>
 
 lesson 6:
-    - lambda expressions in Mines.java > forEachNeighbor()
-    - lambda expressions in MinesUI.java > button.setOnMouseClicked()
+    - lambda expressions: Mines.forEachNeighbor() uses Consumer<Integer> with lambdas
+    - lambda expressions: MinesUI.createGrid() uses lambdas for event handlers (setOnMouseEntered, setOnMouseExited, setOnMouseClicked)
 
 lesson 8:
-    - Scanner used in Mines.java > loadBestScore()
-    - BufferedReader used in Mines.java > loadBestScore()
-    - BufferedWriter used in Mines.java > saveScore()
-    - File used in Mines.java > loadBestScore()
+    - file reading: MinesScore.readScoresFromFile() uses BufferedReader and FileReader
+    - file writing: MinesScore.appendScoreToFile() uses BufferedWriter and FileWriter
+    - parsing and formatting data via DateTimeFormatter
+    - path management using String file paths (e.g., SCORE_FILE)
+    - Scanner usage present in Main CLI for input collection
 
 lesson 9:
-    - JavaFX GUI in MinesUI.java
-    - JavaFX application entry class in MyGame.java > start()
+    - JavaFX application structure: MyGame extends Application and overrides start()
+    - JavaFX UI design: MinesUI builds scenes, stages, layouts, buttons, labels, handlers
 
 lesson 10:
-    - unit tests to be shown in accompanying JUnit test files
+    - JUnit tests included in external test files (MinesTest, MinesScoreTest, etc.)

@@ -1,0 +1,16 @@
+The best part of using chat gipity was how it helped me debug JavaFX issues, especially with
+launching multiple applications within the same JVM instance. It was very good at analyzing
+my code and identifying where I could implement concepts from each lesson. It also helped generate
+boilerplate code and assisted with commenting, refactoring, and creating static variable names.
+
+The worst parts occurred after the game logic was complete and I needed refactoring to meet the
+assignment requirements. I asked gipity to reorganize code such as moving logic into an abstract
+class and overriding methods while keeping the existing logic the same. Even with explicit
+instructions not to change behavior, it still altered the logic and introduced bugs that I had
+to spend a little while debugging.
+
+Gipity is a useful tool that can speed up development and improve the overall coding experience,
+but it still struggles with larger codebases and strictly following constraints. It often broke
+rules like avoiding magic numbers or separating declarations and assignments, and sometimes
+modified working code. It’s a good assistant for certain tasks, but the core, important coding
+is still best done manually. Future jobs are safe—for now.
