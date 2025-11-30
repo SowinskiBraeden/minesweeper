@@ -65,7 +65,7 @@ public class World
      * World constructor creates a hashmap
      * where the key is a Country name, and
      * the value is the Country object.
-     * @throws IOException
+     * @throws IOException if failed to read Countries
      */
     public World()
         throws IOException

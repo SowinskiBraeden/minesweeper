@@ -4,6 +4,9 @@ package ca.bcit.comp2522.project;
  * AscendingPlacement contains the logical and
  * validation of placing an integer in an array
  * of integers following an ascending order.
+ *
+ * @author Braeden Sowinski
+ * @version 1.0.0
  */
 public class AscendingPlacement
     extends PlacementRule
@@ -22,8 +25,11 @@ public class AscendingPlacement
      * @return if the value is in a valid placement
      */
     @Override
-    public boolean isValidPlacement(int[] positions, int index, int value)
-    {
+    public boolean isValidPlacement(
+        final int[] positions,
+        final int   index,
+        final int   value
+    ) {
         for (int i = 0; i < positions.length; i++)
         {
             if (positions[i] == FIRST)
@@ -55,8 +61,10 @@ public class AscendingPlacement
      * without violating the ascending rule
      */
     @Override
-    public boolean canPlaceNext(int[] positions, int nextValue)
-    {
+    public boolean canPlaceNext(
+        final int[] positions,
+        final int nextValue
+    ) {
         for (int i = 0; i < positions.length; i++)
         {
             if (positions[i] != FIRST)
@@ -67,7 +75,7 @@ public class AscendingPlacement
             int left;
             int right;
 
-            left = Integer.MIN_VALUE;
+            left  = Integer.MIN_VALUE;
             right = Integer.MAX_VALUE;
 
             // scan left

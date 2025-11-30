@@ -5,6 +5,9 @@ package ca.bcit.comp2522.project;
  * to represent some two-dimensional board,
  * it stores the width and height of board
  * and must have a reset method.
+ *
+ * @author Braeden Sowinski
+ * @version 1.0.0
  */
 public abstract class GameBoard
 {

@@ -58,8 +58,8 @@ public class MinesScore
      * @param scoreFilePath filepath to append Score to
      */
     public static void appendScoreToFile(
-            final MinesScore score,
-            final String     scoreFilePath
+        final MinesScore score,
+        final String     scoreFilePath
     ) {
         try
         {
@@ -165,8 +165,8 @@ public class MinesScore
      * @return if score is a new high-score in list
      */
     public static boolean isHighScore(
-            final MinesScore        score,
-            final List<MinesScore>  scores
+        final MinesScore        score,
+        final List<MinesScore>  scores
     ) {
         final MinesScore highScore;
 
@@ -191,11 +191,13 @@ public class MinesScore
      * @param randomMode was on or off
      */
     public MinesScore(
-            final LocalDateTime dateTime,
-            final int           seconds,
-            final String        difficulty,
-            final boolean       randomMode
+        final LocalDateTime dateTime,
+        final int           seconds,
+        final String        difficulty,
+        final boolean       randomMode
     ) {
+        validateDifficulty(difficulty);
+
         final DateTimeFormatter formatter;
 
         formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);

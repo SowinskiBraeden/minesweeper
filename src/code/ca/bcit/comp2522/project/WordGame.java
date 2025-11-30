@@ -148,15 +148,15 @@ public class WordGame
      *
      * Once a user is done playing, score from all rounds is
      * saved and high-scores are calculated.
+     *
+     * @param scanner to receive input
      */
-    public void runTrivia()
+    public void runTrivia(final Scanner scanner)
     {
-        final Scanner scanner;
         Score         score;
         boolean       continuePlaying;
 
         continuePlaying = true;
-        scanner = new Scanner(System.in);
 
         final int[] scores;
         int gamesPlayed;
@@ -182,7 +182,7 @@ public class WordGame
 
             do
             {
-                System.out.println("\nDo you want to play again?");
+                System.out.println("\nDo you want to play again? (yes/no)");
                 System.out.print("> ");
 
                 final String playAgain;
@@ -205,8 +205,6 @@ public class WordGame
             } while (true);
 
         } while (continuePlaying);
-
-        scanner.close();
 
         final List<Score> history;
 
@@ -258,6 +256,12 @@ public class WordGame
             throw new RuntimeException(e);
         }
 
-        test.runTrivia();
+        final Scanner scanner;
+
+        scanner = new Scanner(System.in);
+
+        test.runTrivia(scanner);
+
+        scanner.close();
     }
 }

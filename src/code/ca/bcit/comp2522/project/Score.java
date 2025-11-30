@@ -22,10 +22,10 @@ import java.util.List;
  */
 public class Score
 {
-    private static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
-    private static final int    FIRST_GUESS_POINTS = 2;
+    private static final String DATE_PATTERN        = "yyyy-MM-dd HH:mm:ss";
+    private static final int    FIRST_GUESS_POINTS  = 2;
     private static final int    SECOND_GUESS_POINTS = 1;
-    private static final int    SPLIT_VALUE = 1;
+    private static final int    SPLIT_VALUE         = 1;
 
     private final String dateTimePlayed;
     private final int    numGamesPlayed;

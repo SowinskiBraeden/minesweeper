@@ -1,14 +1,6 @@
 package ca.bcit.comp2522.project;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.function.Consumer;
 
 /**
@@ -35,10 +27,6 @@ public class Mines extends GameBoard
     public static final int NO_FLAG            = 0;
     public static final int FLAG               = 1;
     public static final int FLAG_QUESTION      = 2;
-
-    private static final int INITIAL_BEST_SCORE = Integer.MAX_VALUE;
-
-    private static final String SCORE_FILE_NAME = "minesweeper-score.txt";
 
     private static final Random RANDOM_GENERATOR;
 

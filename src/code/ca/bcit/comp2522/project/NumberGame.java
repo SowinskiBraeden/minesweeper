@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.project;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -51,16 +52,16 @@ public class NumberGame
     private static final Font FONT           = Font.font("Arial", FontWeight.BOLD, FONT_SIZE);
     private static final Font MENU_FONT      = Font.font("Arial", FontWeight.NORMAL, MENU_FONT_SIZE);
 
-    private int gamesPlayed;
-    private int gamesWon;
-    private int allTimePlaced;
-    private int numbersPlaced;
-    private Label numberLabel;
-    private int currentNumber;
-    private int[] positions;
-    private List<Button> buttons;
+    private int                   gamesPlayed;
+    private int                   gamesWon;
+    private int                   allTimePlaced;
+    private int                   numbersPlaced;
+    private Label                 numberLabel;
+    private int                   currentNumber;
+    private int[]                 positions;
+    private List<Button>          buttons;
     private RandomNumberGenerator generator;
-    private AscendingPlacement placementValidator;
+    private AscendingPlacement    placementValidator;
 
     /**
      * start NumberGame GUI
@@ -82,9 +83,9 @@ public class NumberGame
         this.numberLabel.setMaxWidth(Double.MAX_VALUE);
         this.numberLabel.setAlignment(Pos.CENTER);
 
-        final VBox root;
+        final VBox     root;
         final GridPane grid;
-        final Scene scene;
+        final Scene    scene;
 
         root = new VBox();
         grid = createGrid();
@@ -142,8 +143,10 @@ public class NumberGame
      * @param title of the popup
      * @param message to show the user
      */
-    private void showPopup(final String title, final String message)
-    {
+    private void showPopup(
+        final String title,
+        final String message
+    ) {
         final Stage  popup;
         final VBox   layout;
         final HBox   buttonLayout;
@@ -316,15 +319,16 @@ public class NumberGame
         showPopup("You Won!", "Congratulations! You placed all numbers correctly.");
     }
 
-
     /*
      * handlePress of button to place number
      * in that cell
      * @param button pressed
      * @param index of button to place value
      */
-    private void handlePress(final Button button, final int index)
-    {
+    private void handlePress(
+        final Button button,
+        final int index
+    ) {
         button.setText("" + this.currentNumber);
         button.setMouseTransparent(true);
         button.setFocusTraversable(false);

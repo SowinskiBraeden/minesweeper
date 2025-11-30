@@ -130,6 +130,10 @@ public class MinesUI
         this.timerRunning = false;
     }
 
+    /*
+     * showInfo displays an info popup
+     * about the random mode
+     */
     private void showInfo(final Window window)
     {
         final Stage  popup;
@@ -172,6 +176,12 @@ public class MinesUI
      * game mode, and field size.
      * @param primaryStage to display main menu to
      */
+    /**
+     * showMainMenu displays main menu to choose
+     * game mode and field size.
+     *
+     * @param primaryStage to display main menu on
+     */
     public void showMainMenu(final Stage primaryStage)
     {
         final Label  titleLabel;
@@ -181,6 +191,7 @@ public class MinesUI
         final Label  modeLabel;
         final Button toggleModeButton;
         final Button modeInfoButton;
+        final Button quitButton;
         final HBox   modeButtons;
         final VBox   root;
         final Scene  scene;
@@ -202,14 +213,19 @@ public class MinesUI
         modeLabel        = new Label("Random Mode: OFF");
         toggleModeButton = new Button("Toggle Random Mode");
         modeInfoButton   = new Button("?");
-        modeButtons      = new HBox(MENU_PADDING, toggleModeButton, modeInfoButton);
+        quitButton       = new Button("Quit");
+
+        modeButtons = new HBox(MENU_PADDING, toggleModeButton, modeInfoButton);
 
         toggleModeButton.setOnAction(e -> {
             this.randomMode = !this.randomMode;
             modeLabel.setText("Random Mode: " + (this.randomMode ? "ON" : "OFF"));
         });
 
-        modeInfoButton.setOnAction(e -> showInfo(primaryStage.getOwner()));
+        modeInfoButton.setOnAction(e -> showInfo(primaryStage));
+
+        quitButton.setFont(MENU_FONT);
+        quitButton.setOnAction(e -> primaryStage.close());
 
         easyButton.setOnAction(e -> startGame(
                 EASY_WIDTH,
@@ -250,7 +266,8 @@ public class MinesUI
             mediumButton,
             hardButton,
             modeLabel,
-            modeButtons
+            modeButtons,
+            quitButton
         );
 
         scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -738,5 +755,10 @@ public class MinesUI
     {
         button.setMouseTransparent(true);
         button.setFocusTraversable(false);
+    }
+
+    public Stage getGameStage()
+    {
+        return this.gameStage;
     }
 }

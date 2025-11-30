@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  * Country class stores a country's
- * name, capital city name, and NUMBER_OF_FACTS
+ * name, capital city name
  * about the country.
  *
  * @author Braeden Sowinski
@@ -12,8 +12,6 @@ import java.util.Random;
  */
 public class Country
 {
-    private static final int  NUMBER_OF_FACTS = 3;
-
     private final String   name;
     private final String   capitalCityName;
     private final String[] facts;

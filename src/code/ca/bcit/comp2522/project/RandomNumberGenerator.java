@@ -24,8 +24,8 @@ public class RandomNumberGenerator
      */
     public RandomNumberGenerator(
         final int min,
-        final int max)
-    {
+        final int max
+    ) {
         this.random = new Random();
 
         this.min = min;
